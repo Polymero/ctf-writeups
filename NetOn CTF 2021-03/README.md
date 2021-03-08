@@ -18,7 +18,7 @@ Final Top 10:
 
 ![](Challenge%20Screenshots/%20Pwn%20-%20Limited.png)
 
-```
+```py
 #!/usr/bin/env python3
 
 # Imports
@@ -67,13 +67,13 @@ I'm not sure whether this counts as a bypass... but hey, it worked. : )
 
 ### Picnicnic - 222
 
-![](Challenge Screenshots/Web - Picnicnic.png)
+![](Challenge%20Screenshots/Web%20-%20Picnicnic.png)
 
 
 
 ### Let me in! - 245
 
-![](Challenge Screenshots/Web - Let me in!.png)
+![](Challenge%20Screenshots/Web%20-%20Let%20me%20in!.png)
 
 
 
@@ -117,9 +117,9 @@ I'm not sure whether this counts as a bypass... but hey, it worked. : )
 
 ### Step by step - 239
 
-![](Challenge Screenshots/Coding - Step by step.png)
+![](Challenge%20Screenshots/Coding%20-%20Step%20by%20step.png)
 
-```
+```py
 #!/usr/bin/env python
 
 # Imports
@@ -160,7 +160,7 @@ print flag
 With some trial and error I managed to get back
 
 ```
-SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3,
+SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3
 ```
 
 which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned out to be correct. : )
