@@ -6,17 +6,17 @@ There were a total of 9 categories with 43 questions combined.
 
 CTF Rules:
 
-![](CTF Rules.png)
+![](CTF%20Rules.png)
 
 Final Top 10:
 
-![](CTF Top 10.png)
+![](CTF%20Top%2010.png)
 
 ## Pwn Category
 
 ### Limited - 499
 
-![](Pwn - Limited.png)
+![](Challenge%20Screenshots/%20Pwn%20-%20Limited.png)
 
 ```
 #!/usr/bin/env python3
@@ -67,13 +67,13 @@ I'm not sure whether this counts as a bypass... but hey, it worked. : )
 
 ### Picnicnic - 222
 
-![](Web - Picnicnic.png)
+![](Challenge Screenshots/Web - Picnicnic.png)
 
 
 
 ### Let me in! - 245
 
-![](Web - Let me in!.png)
+![](Challenge Screenshots/Web - Let me in!.png)
 
 
 
@@ -117,7 +117,7 @@ I'm not sure whether this counts as a bypass... but hey, it worked. : )
 
 ### Step by step - 239
 
-![](Coding - Step by step.png)
+![](Challenge Screenshots/Coding - Step by step.png)
 
 ```
 #!/usr/bin/env python
@@ -163,7 +163,7 @@ With some trial and error I managed to get back
 SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3,
 ```
 
-which, submitted as NETON{*}, turned out to be correct. : )
+which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned out to be correct. : )
 
 
 
