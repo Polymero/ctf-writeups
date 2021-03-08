@@ -2,13 +2,28 @@
 
 I was excited to participate in my first ever CTF and enjoyed the experienced very much. Thanks to all of those involved in setting it up! ~<3
 
-There were a total of 9 categories with 43 questions combined.
+There were a total of 9 categories with 43 questions combined:
+- Pwn
+- Web
+- Stego
+- OSINT
+- Crypto
+- Coding
+- Forensics
+- Reversing
+- Misc
+
+Below you can find my solutions to the challenges I was able to solve and some fruitless tries to some of the challenges could not solve (in time). So be sure to check other participants' writeups as well!
+
+If you have any questions and/or comments, please do not hesitate to contact me. :)
 
 CTF Rules:
 
 ![](CTF%20Rules.png)
 
 Final Top 10:
+
+I placed 3rd :).
 
 ![](CTF%20Top%2010.png)
 
@@ -106,7 +121,7 @@ http://167.99.129.209:8000/check.php?password[]=oops
 ```
 However, this did not work so I used curl instead
 ```sh
-curl -d password[]=oops 167.99.129.209:8000/check.php
+$ curl -d password[]=oops 167.99.129.209:8000/check.php
 ```
 which happily returns our desired flag
 ```
@@ -129,7 +144,7 @@ Deleting our cookie and refreshing the connection just gives us the same cookie.
 What about visiting through curl and sending this cookie with us. (Or setting the cookie value in your browser through inspect.)
 
 ```sh
-curl -v --cookie "flag=TkVUT057MHV" http://167.99.129.209:8001
+$ curl -v --cookie "flag=TkVUT057MHV" http://167.99.129.209:8001
 ```
 *Remember to use the verbose option '-v' in order to see the cookie information.*
 
@@ -154,7 +169,7 @@ NETON{0ur_c00kieS_4re_4wes0me!}
 ![](Challenge%20Screenshots/Web%20-%20Let%20me%20in!.png)
 
 ```sh
-curl -d captcha_challenge=d1ctXg --cookie "PHPSESSID=eh9nn1eko8aj2oe88d9oj542ec" http://167.99.129.209:8002/flag.php
+$ curl -d captcha_challenge=d1ctXg --cookie "PHPSESSID=eh9nn1eko8aj2oe88d9oj542ec" http://167.99.129.209:8002/flag.php
 ```
 
 Succes! Within the returned HTML we find
@@ -172,6 +187,7 @@ Nice evade! Take the flag: <b>NETON{7c49af83a2a68304273a8d330cebd93c}</b>
 So somebody hacked the final exam grades to inflate their own... up to 1337, alright. Well in that case it seems our friend 'nUK<,IDt-.bvKL|./EO$%;k}@\_' is the culprit. However, his name is encrypted...
 
 Within the html file we find some obfuscated javascript
+
 ```js
 function encrypt(_0x40a681) {
     var _0x16b830 = 0x20, _0x561689 = 0x5e, _0x3db275 = 0x0, _0x38a41d = '';
@@ -191,9 +207,49 @@ function encrypt(input) {
     return output;
 ```
 Because of the modulo in there, it might be a bit rough to reverse directly, so let's just brute-force it instead. We can do so by simply trying out a character and seeing if our trial flag matches with the given encrypted flag. I used the following script
+```py
+#!/usr/bin/env python3
+
+# Encryption function
+def encrypt(msg):
+    out = ''; c0 = 0
+    # Loop over input message
+    for i in range(len(msg)):
+        # Increment character ord value
+        out += chr(((ord(msg[i]) + c0) % 94) + 32)
+        # Increment addition variable
+        c0 += ord(msg[i])
+    # Return
+    return out
+
+# Character set
+chars = list(r'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_}!?.,')
+
+# Trial flag and given mystery flag
+flag = 'NETON{'
+mystery = 'nUK<,IDt-.bvKL|./EO$%;k}@_'
+
+i = 0 # iterator
+while flag[-1] != '}':
+    trial = encrypt(flag+chars[i])
+    # Check if our encrypted trial flag matches the mystery one
+    if trial == mystery[:len(flag)+1]:
+        flag += chars[i]
+        i = 0
+    else:
+        i += 1
+    # If we run out of characters
+    if i >= len(chars):
+        print('Expand character list!')
+        break
+        
+print('Gottem!:', flag)
+```
+Which neatly returns our desired flag
+```
+Gottem!: NETON{Y0u_4r3_0n_th3_t0p!}
 ```
 
-```
 
 
 ## Stego Category
@@ -213,6 +269,10 @@ strings kaa.jpg | grep 'NETON'
 *Note that piping the output to grep means you will filter out anything that does not contain 'NETON', but it could also lead you to miss other hidden information.*
 
 ### Seeing blurry - UNSOLVED (50)
+
+![](Challenge%20Screenshots/Stego%20-%20Seeing%20blurry.png)
+
+To be added later.
 
 
 
@@ -235,18 +295,26 @@ NETON{wh1t3_spac3_tr1cks}
 
 ### Step by step - UNSOLVED (250)
 
+![](Challenge%20Screenshots/Steg%20-%20Step%20by%20step.png)
+
 We are giving the following, seemingly uinteresting picture.
 
 ![](Challenge%20Files/neton.bmp)
 
-You can either use the magic selection tool (threshold: 0), the fill bucket (threshold: 0), or simply apply an auto-contrast. The latter options yields the following image
+If we take a closer look, either with image processing software or a simple hexdump command, we see that there is a small variation in the pixel values. So let's try to inflate these variations. To do this, we can either use the magic selection tool (threshold: 0), the fill bucket (threshold: 0), or simply apply an auto-contrast. The latter option yields the following image
 
 ![](Solution%20Screenshots/StegSBS%20-%20Contrasted.png)
+
+In which we can read the following code
+```
+n38f298hsjf
+```
+but no flag... :c
 
 
 ### Invisibility - UNSOLVED (500)
 
-
+![](Challenge%20Screenshots/Steg%20-%20Invisibility.png)
 
 
 
@@ -254,13 +322,23 @@ You can either use the magic selection tool (threshold: 0), the fill bucket (thr
 
 ### Caesar's Secret - 163
 
-![](Challenge%20Screenshots/Crypto%20-%20Caesar's%20Secret.png)
+![](Challenge%20Screenshots/OSINT%20-%20Caesar's%20Secret.png)
+
+```
+flag: 01001110 01000101 01010100 01001111 01001110 01111011 01001010 01110101 01101100 01101001 01110101 01110011 01000011 01100001 01100101 01110011 01100001 01110010 01111101
+```
+which, in binary, trivially translates to ASCII as
+```
+NETON{JuliusCaesar}
+```
 
 
 
 ### Caputure The Flag - 436
 
 ![](Challenge%20Screenshots/OSINT%20-%20Capture%20The%20Flag.png)
+
+![](Solution%20Screenshots/Loc%20-%20CN2019.png)
 
 
 
@@ -270,11 +348,97 @@ You can either use the magic selection tool (threshold: 0), the fill bucket (thr
 
 ![](Challenge%20Screenshots/Crypto%20-%20PawN%20PawN.png)
 
+This challenge provides us with two files, an WAV sound file and a password protected zip file. The WAV file clearly contains morse code that says
+```
+the zip password is 75757575
+```
+With this, we unlock the zip file to find a txt file containing some weird codes.
+```
+8/1P4P1/1PP3P1/1P1P2P1/1P2P1P1/1P3PP1/1P4P1/8 w - - 0 1
+8/1PPPPP2/1P6/1P6/1PPPPP2/1P6/1PPPPP2/8 w - - 0 1
+8/1PPPPPP1/1PPPPPP1/3PP3/3PP3/3PP3/3PP3/8 w - - 0 1
+8/1PPPPPP1/1P4P1/1P4P1/1P4P1/1P4P1/1PPPPPP1/8 w - - 0 1
+8/1P4P1/1PP3P1/1P1P2P1/1P2P1P1/1P3PP1/1P4P1/8 w - - 0 1
+5P2/3PP3/3P4/3P4/2PP4/3P4/3PP3/5P2 w - - 0 1
+8/1PPPPPP1/1P6/1P6/1P6/1P6/1PPPPPP1/8 w - - 0 1
+8/1P4P1/1P4P1/1PPPPPP1/1P4P1/1P4P1/1P4P1/8 w - - 0 1
+8/1PPPPPP1/1P6/1P6/1PPPPPP1/1P6/1PPPPPP1/8 w - - 0 1
+8/1PPPPPP1/1P6/1P6/1P6/1P6/1PPPPPP1/8 w - - 0 1
+8/1P2P3/1P1P4/1PP5/1P1P4/1P2P3/1P3P2/8 w - - 0 1
+8/8/8/8/8/8/1PPPPPP1/8 w - - 0 1
+8/1P4P1/1PP2PP1/1P1PP1P1/1P1PP1P1/1P4P1/1P4P1/8 w - - 0 1
+8/3PP3/2P2P2/1P4P1/1PPPPPP1/1P4P1/1P4P1/8 w - - 0 1
+8/1PPPPPP1/1PPPPPP1/3PP3/3PP3/3PP3/3PP3/8 w - - 0 1
+8/1PPPPP2/1P6/1P6/1PPPPP2/1P6/1PPPPP2/8 w - - 0 1
+3P4/4PP2/5P2/5P2/5PP1/5P2/4PP2/3P4 w - - 0 1
+```
+I recognised this to be a kind of chess code to display board setups, and a quick Google search confirmed this. Every line represents a single chess board, with eight segments, separated by a '/', each with 8 spaces. The spaces can be empty, represented by the numbers, or occupied by a piece, in which case there is a 'P'.
+
+If we create these boards, we find something peculiar... a flag!
+
+![](Solution%20Screenshots/Pawn%20-%20Boards.png)
+
+```
+NETON{CHECK_MATE}
+```
 
 
 ### Weak xor - 239
 
 ![](Challenge%20Screenshots/Crypto%20-%20Weak%20xor.png)
+
+The challenge provides us with an XOR encoded flag in hex, and the code they used to encode it
+```py
+#!/usr/bin/python3
+import os
+flag = open('flag.txt', 'r').read().strip().encode()
+key = os.urandom(6)
+xored = b''
+for i in range(len(flag)):
+    xored += bytes([flag[i] ^ key[i % len(key)]])
+print(f"Flag : {xored.hex()}")
+```
+So they used 6 random bytes as the XOR key... Well, time to brute-force our way to this key. 6 bytes is an incredibly short key length and can be cracked in no time. I made a simple Python script to do this.
+
+```py
+#!/usr/bin/env python3
+
+# Encrypted flag
+chex = '5bbed19a19234dcbf78a3e0b4abcb5e5330721a4b5a3322a7397b5a22a'
+cbyt = cint.to_bytes(29,'big')
+# Example flag
+tag = b'NETON{'
+# Final key
+key = b''
+
+# We know the length of the key is 6 bytes (!)
+while len(key) < 6:
+    # Loop over possible bytes
+    for i in range(256):
+        # Get the byte
+        if i < 16:
+            tryhex = bytes.fromhex('0'+hex(i)[2:])
+        else:
+            tryhex = bytes.fromhex(hex(i)[2:])
+        # Create trial key
+        trykey = key + tryhex
+        # XOR encrypted flag bytes with trial key
+        xor = b''
+        for i in range(len(cbyt)):
+            xor += bytes([cbyt[i] ^ trykey[i % len(trykey)]])
+        # Check XOR result with example flag
+        if xor[:len(key)+1] == tag[:len(key)+1]:
+            key += tryhex
+            break
+# Print results
+print(key)
+print(xor)
+```
+which happily returns us our desired key and flag : )
+```
+b'\x15\xfb\x85\xd5WX'
+b'NETON{X0r_iS_G00d_4_0verfl0w}'
+```
 
 
 
@@ -282,23 +446,154 @@ You can either use the magic selection tool (threshold: 0), the fill bucket (thr
 
 ![](Challenge%20Screenshots/Crypto%20-%20BritishScientific.png)
 
+This challenge is surprisingly straightforward, we are provided with the following quote in a txt file
+```
+Viewing the laws of the electric circuit from the point at which 
+the labours of Ohm has placed us, there is scarcely any branch of 
+experimental science in which so many and such various phenomena 
+are expressed by formulae of such simplicity and generality...
+
+QRRXDRPCKESRSNSWWY
+```
+Google tells us that the quote comes from Charles Wheatstone, who also invented the Playfair cipher! So the encrypted txt at the bottom is likely to be encoded in a playfair cipher. However, to decipher it, we need a 5x5 'key' matrix.
+
+The challenge also tells us that 'He always signs with his name and surname...'. This led me to believe he used the matrix as follows
+```
+C H A R L
+E S W T O
+N B D F G
+I K M P Q
+U V X Y Z
+```
+Indeed he did as it nicely gives us our flag
+```
+NETON{PLAYFAIRISTHEBESTX}
+```
 
 
 ### Facts Br0! - 244
 
 ![](Challenge%20Screenshots/Crypto%20-%20Facts%20Br0!.png)
 
+The challenge provides us a long integer as flag and a public key in a PEM file format. Ding ding ding, RSA alert!
+
+The public key is too short, which allows us to crack it! The PEM file contains the public parts of RSA cryptography, namely 'n' and 'e', encoded in base64. _If you do not recognise these variables it might be nice to read up a little on RSA cryptography, the encoding itself is fairly straightforward._
+```
+-----BEGIN PUBLIC KEY-----
+MDEwDQYJKoZIhvcNAQEBBQADIAAwHQIWAN4vdj9ZJ337BgYayd9cb2tF0QoJAwID
+AQAB
+-----END PUBLIC KEY-----
+```
+However (!), I did not realise that the PEM file format has some additional encoding elements such that you cannot simply convert the two base64 strings to integers and call it a day. I naively found
+```
+n = 74174491295044795964181854285195495718964397093731395961824370391827799637138867436334319587298835673227084716446
+e = 65537
+```
+Although the 'e' has a commonly used value, the 'n' does not factor nicely into two primes...  So I used a Python library to do it for me properly
+```py
+from Crypto.PublicKey import RSA
+
+f = open('../public.pem')
+key = RSA.importKey(f.read())
+print(key.n)
+print(key.e)
+```
+which gave the public RSA elements as
+```
+n = 324724323060034233289551751185171379596941511493891
+e = 65537
+```
+This time around, the 'n' actually factors nicely (using factordb) into the two primes
+```
+p = 25001545096244227516337
+q = 12988170203481337861511552243
+```
+Using these and an Euler inverse function, I was able to derive the private key, the private RSA component 'd' to be
+```py
+def eulinv(x, m):
+    a, b, u = 0, m, 1
+    while x > 0:
+        q = b // x # integer division
+        x, a, b, u = b % x, u, x, a - q * u
+    if b == 1:
+        return a % m
+    else:
+        return None
+
+d = eulinv(key.e,(p-1)*(q-1)); print(d)
+```
+```
+323728403366806485896597412434387317854754383435009
+```
+Now we are able to decrypt the provided 'flag' using m = pow(c, d, n). In Python
+```py
+# Get message from encrypted flag
+pow(flag,d,key.n)
+# Turn integer into binary (0 added in front )
+mbit = bin(26634179113006760524799996616930504110973)[2:]
+# Pad with 0s in front to make sure it is in byte format
+while len(mbit) % 8 != 0:
+    mbit = '0' + mbit
+# Bytes -> ASCII
+m = ''.join([chr(int(mbit[i:i+8],2)) for i in range(0,len(mbit),8)])
+print(m)
+```
+which happily returns
+```
+NETON{3z_F4ct0rs}
+```
 
 
 ### Not Morse - UNSOLVED (249)
 
 ![](Challenge%20Screenshots/Crypto%20-%20Not%20Morse.png)
 
+To be added later.
+
 
 
 ### RSA... no primEs, no problEm - 500
 
 ![](Challenge%20Screenshots/Crypto%20-%20RSA...%20no%20primEs,%20no%20problEm.png)
+
+Another RSA challenge! But this time, the numbers are substantially bigger :c
+The challenge provided us with an encrypted flag, public component 'n' and phi(n).
+```
+ciphertext = 4803486620985796010075216068877609455871383897640323954843756796800173149437251687733347664192572117005126499615124844328373675595265268457208063073063362666296732488986704487923437514493478565848183238995971938189096941670496102571815095353480403637698691345512049769785098395967252710672386044217321956851169565136849198146328368935680111095304534054866044961612091553409953330964655033765906224029250112390318273915843693588625005937293557999267431911756800430138791635421069977
+
+n = 14243345730631857177062718957286458295344875661901393577745661535671731182469817848719170841079560124200634261984946297612967896241817034756539493737449488275719622652895734552547316101216424483474862911698249829751472886166538635034783417821365701447757997511751589750140515711946334390780520161779493842518544535120769290658501358009251342540552113786916173497963072314840842823842101868020523794699586378835932131301349396908327821519900075538365718554522120543219846421981750367
+
+phi(n) = 14243345730631857177062718957286458295344875661901393577745661535671731182469817848719170841079560124200634261984946297612967896241817034756539493737449488275719622652895734552547316101216424483474862911698249829751472886166538635034783417813763312676513662599184910888148679300475389478079315732593163367616609472566305826936916314217502538829723285645468007039496239828709581450294608647853663479553932636891934128772821535614594114832137463330741228691150099997156720502848674840
+```
+Note that this time, 'n' is too large for us to factorise it. Even factordb cannot help us here. However, we are given a phi(n)... which we can use to derive the private component 'd' using d = \~e mod phi(n). There is one catch though, we do not know 'e'... Luckily, for computational reasons, 'e' is usually not too big and we know it must be a coprime of phi(n), so we can use our previously used Euler inverse function. Now we just brute-force our way by incrementing a test value for 'e' and checking whether or not the output makes sense :). To do this, I used some Python again (I left out the flag, n, phi_n and eulinv() definitions)
+```py
+itere = 3 # trial 'e'
+while itere < int(1e6):
+    # Euler inverse (see previous RSA challenge)
+    d = eulinv(itere,phi_n)
+    # If d returned an actual value (i.e. e is a coprime)
+    if not d is None:
+        # Set RSA components
+        e = itere
+        d = eulinv(e, phi_n)
+        # Get message
+        mint = pow(flag,d,n)
+        mbit = bin(mint)[2:];
+        while len(mbit)%8 != 0:
+            mbit = '0' + mbit
+        m = [int(mbit[i:i+8],2) for i in range(0,len(mbit),8)]
+        # Check whether all message characters are within common ASCII range
+        if (min(m) >= 33) & (max(m) <= 125):
+            flag = ''.join([chr(i) for i in m])
+            print(e, flag)
+            break
+    # Increment 'e'
+    itere += 1
+```
+After a few seconds of thinking, it finds our flag at an 'e' value of 15049!
+```
+NETON{RSA_1s_r34lly_fun!}
+```
 
 
 
@@ -392,7 +687,7 @@ which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned ou
 
 ### File Bomb - UNSOLVED (475)
 
-
+To be added later.
 
 ## Misc Category
 
@@ -412,11 +707,45 @@ which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned ou
 
 ![](Challenge%20Screenshots/Misc%20-%20Kasiski%20the%20magician.png)
 
-
+To be added later.
 
 ### MathTomata - 245
 
 ![](Challenge%20Screenshots/Misc%20-%20MathTomata.png)
+
+So a 'DFA', or Deterministic Finite Automaton, is a kind of finite-state machine. This means we can put in some input and out comes something depending on its structure. A quick read on Wikipedia explain enough in order to figure this puzzle out. We are given the following information about our DFA
+```
+Parameter 		Meaning						Value
+------------------------------------------------------------------
+Q 				States / nodes				Q0 through Q9
+Σ				Possible messages			{d,m,n,p,s,t,0,1,3}
+δ 				Transition function 		_see Table below_
+q0 				Initial state 				Q0
+F 				Accept / final state 		Q9
+```
+```
+  δ	 |	d 	m 	n 	p 	s 	t 	0 	1 	3
+------------------------------------------------------------------
+ Q0  |						Q1
+ Q1  |									Q2
+ Q2  |	Q3
+ Q3  |		Q8		Q4
+ Q4  | 							Q5
+ Q5  | 			Q7 					Q6
+ Q6  | 					Q4
+ Q7  | 									Q2
+ Q8  | 									Q9
+ Q9  |
+```
+In other words, we can picture this as a collection of 10 nodes, or stepping stones, that are connected to each other according to the transition function. For every step we take, we pick up one of the possible messages in order to string our flag together. Furthermore, we need to start at Q0, end at Q9, and take exactly 13 steps (as denoted in the challenge description). A sketch of this system is given below.
+
+![](Solution%20Screenshots/DFA%20-%20Sketch.png)
+
+Following the stepping stones, we can derive the following flag
+```
+NETON{t3dp01s0n3dm3}
+```
+F   o7
 
 
 
@@ -424,5 +753,32 @@ which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned ou
 
 ![](Challenge%20Screenshots/Misc%20-%20Gotta%20catch%20em%20flag.png)
 
+With such a title, I'm expecting some kind of link to Pokémon, which would be amazing :). Anyway, we are given a simple JPG image, nothing suspicous so far. However, a quick binwalk tells us otherwise
+```sh
+$ binwalk NETON.jpg 
+```
+```
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             JPEG image data, JFIF standard 1.01
+30            0x1E            TIFF image data, big-endian, offset of first image directory: 8
+476           0x1DC           Copyright string: "Copyright (c) 1998 Hewlett-Packard Company"
+122067        0x1DCD3         RAR archive data, version 5.x
 
+```
+Mmh... a RAR file attached to the image, okay. Let's extract it. Now we find a File.zip which is password protected :c, and a folder called 'EmuCR-no$gba-w'. An GBA emulator of some sorts??? Are we actually going to play Pokémon, that would be great. Hey, there's a Pokémon Fire Red save file in here. After sneaking in a ROM file, and booting up the emulator, we are greeted by a lovely surprise
 
+![](Solution%20Screenshots/Catch%20-%20Save.png)
+
+![](Solution%20Screenshots/Catch%20-%20Team.png)
+
+Alright, sure thing! Let's look at our box.
+
+![](Solution%20Screenshots/Catch%20-%20Guacamole.png)
+
+![](Solution%20Screenshots/Catch%20-%20Fries.png)
+
+So the password for the zip is '334355GUACAMOLEFRIES', lovely! In it, we find Flag.txt containing our flag safely encoded in base64... but not for long!
+```
+NETON{7h3_r34l_fl46_15_h3r3}
+```
