@@ -2,7 +2,7 @@
 
 I was excited to participate in my first ever CTF and enjoyed the experienced very much. Thanks to all of those involved in setting it up! ~<3
 
-There were a total of 9 categories with 43 questions combined:
+We were set a total of 43 challenges across nine different categories:
 - Pwn
 - Web
 - Stego
@@ -13,7 +13,7 @@ There were a total of 9 categories with 43 questions combined:
 - Reversing
 - Misc
 
-Below you can find my solutions to the challenges I was able to solve and some fruitless tries to some of the challenges could not solve (in time). So be sure to check other participants' writeups as well!
+Below you can find my solutions to the challenges I was able to solve and some fruitless tries to some of those I could not solve (in time). So be sure to check other participants' writeups as well! The points are displayed as well, some of which are reduced due to the dynamic scoring system (more solves = fewer points). Within the screenshots, the authors of each individual puzzle is displayed as well.
 
 If you have any questions and/or comments, please do not hesitate to contact me. :)
 
@@ -361,7 +361,7 @@ lacus imperdiet nascetur fringilla neque felis natoque nulla ac aliquet mus.
 
 When I pasted it into Python, I was met by a little surprise.
 
-![](Challenge%20Screenshots/LoremIpsum.png)
+![](Solution%20Screenshots/LoremIpsum.png)
 
 which, converted to bytes leaves us with
 
@@ -387,11 +387,11 @@ Although the length of the code is divisible by 8, I was unable to convert it to
 
 So it seems Brutus has taken over Caesar's Twitter account after the 'incident'. Nothing interesting, apart from the bottom comment...
 
-![](Challenge%20Screenshots/JC%20-%20Brutus.png)
+![](Solution%20Screenshots/JC%20-%20Brutus.png)
 
 Let's try to retrieve this by checking the waybackmachine. Aha, there is a snapshot from 19 feb, let's check it out!
 
-![](Challenge%20Screenshots/JC%20-%20Caesar.png)
+![](Solution%20Screenshots/JC%20-%20Caesar.png)
 
 His bio contains something noteworthy, 'HjqbxiPcndct'. Likely to be in Caesar shift. Yup, ROT15 reveals 'SubmitAnyone'. This allows us to open up a zip file the challenge gave us, it contains a txt file with
 
@@ -548,7 +548,7 @@ N B D F G
 I K M P Q
 U V X Y Z
 ```
-Indeed he did as it nicely gives us our flag
+Indeed he did as deciphering the code with the above 'key' matrix nicely gives us our flag
 ```
 NETON{PLAYFAIRISTHEBESTX}
 ```
@@ -686,12 +686,56 @@ NETON{RSA_1s_r34lly_fun!}
 
 ![](Challenge%20Screenshots/Coding%20-%20Run%20Run%20Run.png)
 
+So this site shows a simple equation and challenges us to send the answer, encoded in an MD5 hash, before the time runs out. Doing it by hand is not an option... Furthermore, it seems like the equation is always of the form A * B - C, were all of the variables are 3-digit integers. So we can just set-up an easy static Python script, using the requests and hashlib libraries. _Note that the equation on the site does not refresh upon request, but on a small time interval. This allows us to first request the page (GET) and then send the answer back to the server (POST), as long as we supply it our cookie as well (!)_
+```py
+#!/usr/bin/env python
+
+# Imports
+import requests
+import hashlib
+
+# Headers
+headers = {
+	"Connection": "keep-alive",
+	"Cookie": "PHPSESSID=mfn12kjrqc85sb83rf0v0dm5af"
+}
+
+# Request page
+push = requests.get("http://167.99.129.209:7777/index.php",headers=headers)
+
+# Extract the equation 
+strsum = push.text[196:211]
+print strsum
+
+# Compute the answer of the equation
+res = int(strsum[0:3]) * int(strsum[6:9]) - int(strsum[12:15])
+print res
+
+# Get the MD5 hash
+md5 = hashlib.md5(str(res)).hexdigest()
+print md5
+
+data = {
+	"md5": md5
+}
+
+# Send it back
+push = requests.post("http://167.99.129.209:7777/index.php",headers=headers,data=data)
+
+print push.text
+```
+Within the printed HTML we find our flag, along with a nice compliment
+```
+Nice script! Take your flag: NETON{ScR1pT1ng_5a9522b8a3a9d3e2a3bf373803fa8e6c}
+```
+
 
 
 ### Step by step - 239
 
 ![](Challenge%20Screenshots/Coding%20-%20Step%20by%20step.png)
 
+So... they leave us to guess a password once again. More specifically, we are supposed to just guess the flag. To help us a bit, they tell us whenever we send in *part* of the flag. This makes it just another simple brute-force challenge through trail and error. Here is the Python script I used
 ```py
 #!/usr/bin/env python
 
@@ -730,7 +774,7 @@ while i<len(chrs):
 print flag
 ```
 
-With some trial and error I managed to get back
+With some tempering of the initial trial flag, I managed to get back
 
 ```
 SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3
@@ -744,6 +788,49 @@ which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned ou
 
 ![](Challenge%20Screenshots/Coding%20-%20SecretMessage.png)
 
+So we already have our flag
+```
+̜͍͑͋˻͒̽͊˼˻͇̽̓˻͍͉̼͍̀͌˻͑͂̇˻͉͓͍͂˻͇̽̓̀˻͉͉̀͌̕ͅ˻̢̜̭̝̜͖̼̺͍̺͕͇̺͎̼̌͋̎͋̋͌̀̌̎͌͘
+```
+but it looks kind of weird... Luckily, they tell us how they encrypted it
+```py
+def encrypt(pwd, s):
+	n = 0
+	for c in pwd: n += ord(c)
+	lc = string.ascii_lowercase
+	uc = string.ascii_uppercase
+	tcyph = str.translate(s, str.maketrans(lc + uc, lc[13:] + lc[:13] + uc[13:] + uc[:13]))
+	fcyph = ''
+	for c in tcyph: fcyph += chr(ord(c) + n)
+	return fcyph
+```
+
+Seems we have a simple translation mapping, by swapping the halves of the lower- and uppercase alphabet, and an addition factor. This factor is made by adding the ord values of all charaters in a password. Knowing this factor is zero at the beginning we can find it by guessing the first letter to be 'N'. Using a simple Python script
+```py
+# Imports
+import string
+
+lc = string.ascii_lowercase
+uc = string.ascii_uppercase
+# Alphabet in, alphabet out
+dic_in = lc + uc
+dic_out = lc[13:] + lc[:13] + uc[13:] + uc[:13]
+# Offset guess
+n = 731
+# Flag
+flag = [chr(ord(i)-n) for i in list('̜͍͑͋˻͒̽͊˼˻͇̽̓˻͍͉̼͍̀͌˻͑͂̇˻͉͓͍͂˻͇̽̓̀˻͉͉̀͌̕ͅ˻̢̜̭̝̜͖̼̺͍̺͕͇̺͎̼̌͋̎͋̋͌̀̌̎͌͘')]
+# Loop over flag 
+for i,char in enumerate(flag):
+    if char in lc+uc:
+        flag[i] = dic_in[dic_out.index(char)]
+
+print(''.join(flag))
+```
+we find
+```
+Nice job! you earned it, take your award: NETON{n1c3_c0de_my_fr13nd}
+```
+Note that we got lucky. I guessed 'N' to be the first letter because of the flag format (NETON{}), however it did not start with the flag. Second option would have been to guess the final character to be '}', so we would have found it either way :).
 
 
 ## Forensics Category
@@ -752,17 +839,44 @@ which, submitted as NETON{SuBsTr1nGs_4r3_FuN_4nD_C0uLD_b3_vUln3rAbL3}, turned ou
 
 ![](Challenge%20Screenshots/Forensics%20-%20Infiltration.png)
 
+We have a capture.pcapng, so let's fire up that WireShark! We find some connections to various websites, of which there are some POSTS to http://www.eljoselillo7.tech/action.php as well. Seems like our 'hacker' tried an invalid username and password combo before submitting a correct one.
 
+![](Solution%20Screenshots/INF%20-%20Login.png)
+
+![](Solution%20Screenshots/INF%20-%20Try1.png)
+
+![](Solution%20Screenshots/INF%20-%20Try2.png)
+
+So we can login ourselves now on the website, or just retrieve the flag from the OK the server send back to our 'hacker' buddy. :)
+
+![](Solution%20Screenshots/INF%20-%20Flag.png)
+
+```
+NETON{N1c3_4n4l1s1s!}
+```
 
 ### Picasso01 - 225
 
 ![](Challenge%20Screenshots/Forensics%20-%20Picasso01.png)
 
+Binwalking through the provided file we find there is a secret.txt inside, interesting. Using strings and grep
+```sh
+$ strings dump.raw | grep "NETON"
+```
+we quickly find the flag
+```
+NETON{7h15_w1ll_no7_b3_7h3_ncl}
+```
 
 
-### Lost in Lab - 479
+
+### Lost in Lab - UNSOLVED (479)
 
 ![](Challenge%20Screenshots/Forensics%20-%20Lost%20in%20Lab.png)
+
+We got some kind of disk image. Binwalking it reveals a whole bunch of stuff, probably not the right way to do this, but hey ¯\\\_(ツ)\_/¯. Anyway, we find a password protected zip file with LabPractical.xlsx, which looks promising. But I do not know the password, nor could I find it within any of the files. Although I did find out about this... Flavio Oliveira, which sadly did not turn out to be the answer :c.
+
+![](Solution%20Screenshots/LIL%20-%20Flavio.png)
 
 
 
@@ -778,12 +892,54 @@ To be added later.
 
 ![](Challenge%20Screenshots/Misc%20-%20Inception.png)
 
+Fairly straightforward challenge. It provides us a QR-code, which leads to a mega.nz link containing a txt file with xml data encoded in base64
+
+![](Challenge%20Files/qr.png)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+<rect shape-rendering="optimizeSpeed"  x="0" y="0" width="200" height="200" fill="white" />
+<rect shape-rendering="optimizeSpeed"  x="12" y="12" width="7" height="7" fill="black" />
+
+...
+
+<rect shape-rendering="optimizeSpeed"  x="180" y="180" width="7" height="7" fill="black" /></svg>
+```
+
+This shows us another QR code...
+
+![](Challenge%20Files/qr2.png)
+
+Scanning it reveals the flag
+```
+NETON{ThatsRoughBuddy}
+```
+
 
 
 ### Photogra.fy - 227
 
 ![](Challenge%20Screenshots/Misc%20-%20Photogra.fy.png)
 
+The Twitter feed contains a link to a website. Although this website itself does not seem too interesting, it refers to a login.js file which contains the following
+```js
+function validate() {
+    console.log(String['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](0x4e, 0x45, 0x54, 0x4f, 0x4e, 0x7b, 0x4e, 0x61, 0x54, 0x69, 0x30, 0x6e, 0x61, 0x31, 0x5f));
+}
+```
+Which, if we convert the bytes to ASCII, would print
+```
+NETON{NaTi0na1_
+```
+Mmh... so not the end of the story it seems... Maybe it has something to do with national parks, or a national building, considering the images on the website. Yup, the final image contains the second part of the flag as metadata.
+```
+_CiB3rL4gu3}
+```
+In the end, it was referring to something completely different, the National Cyber League. Well whatever, we got what we came for :).
+```
+NETON{NaTi0na1_CiB3rL4gu3}
+```
 
 
 ### Kasiski the magician - UNSOLVED (235)
@@ -791,6 +947,8 @@ To be added later.
 ![](Challenge%20Screenshots/Misc%20-%20Kasiski%20the%20magician.png)
 
 To be added later.
+
+
 
 ### MathTomata - 245
 
@@ -828,7 +986,7 @@ Following the stepping stones, we can derive the following flag
 ```
 NETON{t3dp01s0n3dm3}
 ```
-F   o7
+F.   o7
 
 
 
@@ -865,3 +1023,6 @@ So the password for the zip is '334355GUACAMOLEFRIES', lovely! In it, we find Fl
 ```
 NETON{7h3_r34l_fl46_15_h3r3}
 ```
+
+
+# Thanks once again to those at NetOn for organising this wonderful CTF!
