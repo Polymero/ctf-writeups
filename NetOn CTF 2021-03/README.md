@@ -1025,4 +1025,4 @@ NETON{7h3_r34l_fl46_15_h3r3}
 ```
 
 
-# Thanks once again to those at NetOn for organising this wonderful CTF!
+# My thanks once more to those at NetOn for organising this wonderful CTF! ~<3
