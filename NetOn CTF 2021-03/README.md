@@ -33,6 +33,7 @@ I placed 3rd :).
 
 ![](Challenge%20Screenshots/Pwn%20-%20Limited.png)
 
+Upon connecting it promptly tells us we have 3 tries to guess a 3-digit code. Well... if you do not want to let me in if I ask nicely, I will just guess my way in >:). I use pwntools in Python to spam the address with password guesses:
 ```py
 #!/usr/bin/env python3
 
@@ -68,7 +69,7 @@ while pwd < 1000:
 	s.close()
 ```
 
-Although the password is randomised (as could be deduced from the provided ELF), a 3-digit password can be easily brute-forced. So to no surprise, at some point this script got lucky and got returned:
+Although the password is randomised (as could be deduced from the provided ELF), a 3-digit password can be easily brute-forced. So to no surprise, after some guessing this script got lucky and got returned:
 
 ```
 Nice! The flag is NETON{N1c3_ByP4sS_My_Fr13eND!}
@@ -168,6 +169,34 @@ NETON{0ur_c00kieS_4re_4wes0me!}
 
 ![](Challenge%20Screenshots/Web%20-%20Let%20me%20in!.png)
 
+An empty page, with just a taunting 'Try to catch me!'... Pff, dare provoke me? Alright, alright. Let's see what you do _click_ nothing... Hah?
+Upon inspection it sends us to flag.php, but visiting it immediately sends us back to index.php... Let's curl!
+
+```sh
+$ curl http://167.99.129.209:8002/flag.php
+```
+reveals the structure of flag.php
+```html
+<html>
+        <head>
+                <title>Try to catch the flag!</title>
+        </head>
+        <body>
+                <form method="POST">
+                        <p>
+                                <label for="captcha">Please Enter the Captcha Text</label><br />
+                                <img src="captcha.php" alt="CAPTCHA" class="captcha-image">
+                        </p>
+                        <p>
+                                <input type="text" id="captcha" name="captcha_challenge">
+                                <input type="submit" value="Send">
+                        </p>
+                </form>
+        </body>
+</html>
+```
+So it actually sends us to captcha.php instead of index.php. Okay, let's curl once more to find... gibberish... oh. Visiting the URL with a browser gives us a captcha image. Mmh, how do we feed this captcha code to the HTML form. Every time we request (refresh) the page, we get a new captcha... How about this: we empty out our cookie jar and visit captcha.php to get a captcha image and a PHP session cookie. Now let's curl both the captcha code and the session cookie to captcha.php
+
 ```sh
 $ curl -d captcha_challenge=d1ctXg --cookie "PHPSESSID=eh9nn1eko8aj2oe88d9oj542ec" http://167.99.129.209:8002/flag.php
 ```
@@ -177,6 +206,8 @@ Succes! Within the returned HTML we find
 ```
 Nice evade! Take the flag: <b>NETON{7c49af83a2a68304273a8d330cebd93c}</b>
 ```
+
+_Other combinations of captcha codes and PHP session ID cookies also work!_
 
 
 
@@ -295,7 +326,7 @@ NETON{wh1t3_spac3_tr1cks}
 
 ### Step by step - UNSOLVED (250)
 
-![](Challenge%20Screenshots/Steg%20-%20Step%20by%20step.png)
+![](Challenge%20Screenshots/Stego%20-%20Step%20by%20step.png)
 
 We are giving the following, seemingly uinteresting picture.
 
@@ -314,7 +345,37 @@ but no flag... :c
 
 ### Invisibility - UNSOLVED (500)
 
-![](Challenge%20Screenshots/Steg%20-%20Invisibility.png)
+![](Challenge%20Screenshots/Stego%20-%20Invisibility.png)
+
+So we are given a txt file with some lorem ipsum...
+```
+Lorem ipsum dolor ‍‍⁡‌⁤‌⁤‍⁡‌⁤‍‍⁢⁢‌⁡‍⁣⁢‍⁤⁢⁡‌‍‌⁤⁤⁢‍‌‍‌⁤‍‍‌⁡‍⁢⁡⁢⁢‍⁡‍‌⁢‌⁡⁢‍⁡‍‍⁢‍‌⁡‍⁡‍⁢⁡⁣⁢⁡⁢⁢⁤‍⁡⁢⁡⁢‍‍⁢‌⁤⁡⁢‍⁡⁢‍⁣‍‌‍⁢⁣⁣⁢⁡⁢‌⁢⁢⁢‌⁢‌sit amet consectetur adipiscing elit imperdiet leo, 
+magnis non praesent diam sociosqu mi placerat pellentesque primis neque, 
+congue cras pretium semper bibendum potenti natoque cum. 
+Bibendum sed erat imperdiet habitant nostra dapibus massa parturient eros urna leo, 
+ultrices felis curabitur potenti lobortis montes justo magnis suscipit ridiculus purus feugiat, 
+eget lectus per mollis inceptos litora orci ante maecenas risus. 
+Torquent suscipit sem ridiculus cubilia a id habitant consequat ad laoreet blandit sollicitudin, 
+lacus imperdiet nascetur fringilla neque felis natoque nulla ac aliquet mus.
+```
+
+When I pasted it into Python, I was met by a little surprise.
+
+![](Challenge%20Screenshots/LoremIpsum.png)
+
+which, converted to bytes leaves us with
+
+```
+\u200d\u200d\u2061\u200c\u2064\u200c\u2064\u200d\u2061\u200c\u2064\u200d\u200d\u2062\u2062\u200c\u2061\u200d\u2063\u2062\u200d\u2064\u2062\u2061\u200c\u200d\u200c\u2064\u2064\u2062\u200d\u200c\u200d\u200c\u2064\u200d\u200d\u200c\u2061\u200d\u2062\u2061\u2062\u2062\u200d\u2061\u200d\u200c\u2062\u200c\u2061\u2062\u200d\u2061\u200d\u200d\u2062\u200d\u200c\u2061\u200d\u2061\u200d\u2062\u2061\u2063\u2062\u2061\u2062\u2062\u2064\u200d\u2061\u2062\u2061\u2062\u200d\u200d\u2062\u200c\u2064\u2061\u2062\u200d\u2061\u2062\u200d\u2063\u200d\u200c\u200d\u2062\u2063\u2063\u2062\u2061\u2062\u200c\u2062\u2062\u2062\u200c\u2062\u200c
+```
+
+Some zero-width steganography, huh. Checking numpy.unique(x, return_counts=True) tells us there are 6 different unicode values. 
+
+```
+array(['\u200c', '\u200d', '\u2061', '\u2062', '\u2063', '\u2064'], dtype='<U1'), array([17, 28, 18, 27,  5,  9], dtype=int64)
+```
+
+Although the length of the code is divisible by 8, I was unable to convert it to binary... Also interpreting it as some base-6 code did not reveal anything...
 
 
 
@@ -323,6 +384,16 @@ but no flag... :c
 ### Caesar's Secret - 163
 
 ![](Challenge%20Screenshots/OSINT%20-%20Caesar's%20Secret.png)
+
+So it seems Brutus has taken over Caesar's Twitter account after the 'incident'. Nothing interesting, apart from the bottom comment...
+
+![](Challenge%20Screenshots/JC%20-%20Brutus.png)
+
+Let's try to retrieve this by checking the waybackmachine. Aha, there is a snapshot from 19 feb, let's check it out!
+
+![](Challenge%20Screenshots/JC%20-%20Caesar.png)
+
+His bio contains something noteworthy, 'HjqbxiPcndct'. Likely to be in Caesar shift. Yup, ROT15 reveals 'SubmitAnyone'. This allows us to open up a zip file the challenge gave us, it contains a txt file with
 
 ```
 flag: 01001110 01000101 01010100 01001111 01001110 01111011 01001010 01110101 01101100 01101001 01110101 01110011 01000011 01100001 01100101 01110011 01100001 01110010 01111101
@@ -338,7 +409,19 @@ NETON{JuliusCaesar}
 
 ![](Challenge%20Screenshots/OSINT%20-%20Capture%20The%20Flag.png)
 
+We are given the following image, nothing more. However, the image has some obvious clues.
+
+![](Challenge%20Files/location.png)
+
+Aha, some chinese characters and what seems to be a big '2019'.
+
 ![](Solution%20Screenshots/Loc%20-%20CN2019.png)
+
+A quick simple Google search 'CTF China 2019' brings us to Zhengzhou. Looking around a bit we quickly stumble upon the Zhengzhou Greenland Plaza, which matches the environment of the photo. They just left the most iconic landmark out of it :).
+
+```
+NETON{REAL_WORLD_CTF}
+```
 
 
 
