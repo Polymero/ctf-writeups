@@ -6,7 +6,7 @@
 
 ### Dice Roll [Medium] - 406
 
-![](Challenge%20Screenshots/Crypto%20-%20Dice%20Roll.png)
+![](Challenge%20Screenshots/Dice%20Roll.png)
 
 ...
 
@@ -78,7 +78,7 @@ flag{e915b62b2195d76bfddaac0160ed3194}
 
 ### Elliptical [Hard] - 500 (Overdue)
 
-![](Challenge%20Screenshots/Crypto%20-%20Elliptical.png)
+![](Challenge%20Screenshots/Elliptical.png)
 
 ...
 
@@ -181,7 +181,7 @@ flag{b3be177d016ebf9753079c7adc9c28c3}
 
 ### Treasure [Easy] - 448 (Overdue)
 
-![](Challenge%20Screenshots/Crypto%20-%20Treasure.png)
+![](Challenge%20Screenshots/Treasure.png)
 
 ...
 
@@ -225,7 +225,7 @@ flag{62d869c6b886dac2dd743086e451f76b}
 
 ### Eaxy [Easy] - 433 (Overdue)
 
-![](Challenge%20Screenshots/Crypto%20-%20Eaxy.png)
+![](Challenge%20Screenshots/Eaxy.png)
 
 ...
 
@@ -243,7 +243,7 @@ flag{16edfce5c12443b61828af6cab90dc79}
 
 ### DDR [Medium] - 497 (Overdue)
 
-![](Challenge%20Screenshots/Scripting%20-%20DDR.png)
+![](Challenge%20Screenshots/DDR.png)
 
 ...
 
