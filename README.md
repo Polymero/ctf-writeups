@@ -14,7 +14,7 @@ www.sebven.com/HE/overview
 # 2021
 
 - **UMassCTF 2021**
-	- [malware](./tree/master/2021/UMassCTF%202021-03/malware) - Crypto 434 (78) \\
+	- [malware](./tree/master/2021/UMassCTF%202021-03/malware) - Crypto 434 (78)\
 		&#8250; AES-CTR with re-used iv/counter and known plaintext
 	- Factoring is Fun - Crypto 500 (7) [write-up](./tree/master/2021/UMassCTF%202021-03/Factoring%20is%20Fun)
 		&#8250; Iterative Lattice Factorisation with 'random' known bits of p
