@@ -85,6 +85,7 @@ s = remote(host,port)
 context.log_level = 'debug'
 
 
+# Get the encrypted time (contains the offset)
 s.recv()
 s.sendline('1')
 
@@ -93,17 +94,23 @@ s.recvuntil('\n')
 
 enc_time = int(s.recvuntil('\n', drop=True).decode('ascii'))
 
+
+# Send our guess based on seed derived from the decrypted time
 s.recv()
 s.sendline('2')
 
 s.recvuntil('\n')
 
+# Largest prime of N, which > m
 p = 50700462220707155573
 
+# Decrypt enc_time
 time = min(np.array([prime_mod_sqrt(i,p) for i in prime_mod_sqrt(enc_time,p)]).flatten())
 
+# Set seed
 random.seed(time)
 
+# Our guess
 guess = random.randint(0, 99999999999)
 
 s.sendline(str(guess))

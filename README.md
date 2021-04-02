@@ -9,19 +9,19 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 # 2021
 
 - **Foobar CTF 2021**
-	- [Profezzor revenge](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 100 (66)\
+	- [Profezzor revenge](./tree/master/2021/Foobar%20CTF%202021/Profezzor%20revenge) - Crypto 100 (66)\
 		&#8250; XOR entire PDF with key derived from hex signature
-	- [Lost-N](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 100 (47)\
+	- [Lost-N](./tree/master/2021/Foobar%20CTF%202021/Lost-N) - Crypto 100 (47)\
 		&#8250; RSA, unknown modulus recovery from cipher- plaintext pairs
-	- [Hill-Kill](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 436 (15)\
+	- [Hill-Kill](./tree/master/2021/Foobar%20CTF%202021/Hill-Kill) - Crypto 436 (15)\
 		&#8250; Hill cipher, pwn automatic decryption
-	- [Back to the future](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 453 (13)\
+	- [Back to the future](./tree/master/2021/Foobar%20CTF%202021/Back%20to%20the%20future) - Crypto 453 (13)\
 		&#8250; RSA, modular square roots, time seeded random()
-	- [Pascal's Chemistry Lab](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 453 (13)\
+	- [Pascal's Chemistry Lab](./tree/master/2021/Foobar%20CTF%202021/Pascal_s%20Chemistry%20Lab) - Crypto 453 (13)\
 		&#8250; Fermat factorisation, Paillier cryptosystem
-	- [Intern](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 461 (12)\
-		&#8250; RSA, LCG padding prediction, Coppersmith's short-pad attack
-	- [From Japan with Love](./tree/master/2021/Foobar%20CTF%202021/) - Stego 383 (20)\
+	- [Intern](./tree/master/2021/Foobar%20CTF%202021/Intern) - Crypto 461 (12)\
+		&#8250; RSA, LCG prediction, Franklin-Reiter related message attack, (Coppersmith's short-pad attack)
+	- [From Japan with Love](./tree/master/2021/Foobar%20CTF%202021/From%20Japan%20with%20Love) - Stego 383 (20)\
 		&#8250; QR decoy, LSB hidden ascii
 
 - **picoCTF 2021**
