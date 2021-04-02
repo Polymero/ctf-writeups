@@ -8,6 +8,22 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 ------
 # 2021
 
+- **Foobar CTF 2021**
+	- [Profezzor revenge](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 100 (66)\
+		&#8250; XOR entire PDF with key derived from hex signature
+	- [Lost-N](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 100 (47)\
+		&#8250; RSA, unknown modulus recovery from cipher- plaintext pairs
+	- [Hill-Kill](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 436 (15)\
+		&#8250; Hill cipher, pwn automatic decryption
+	- [Back to the future](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 453 (13)\
+		&#8250; RSA, modular square roots, time seeded random()
+	- [Pascal's Chemistry Lab](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 453 (13)\
+		&#8250; Fermat factorisation, Paillier cryptosystem
+	- [Intern](./tree/master/2021/Foobar%20CTF%202021/) - Crypto 461 (12)\
+		&#8250; RSA, LCG padding prediction, Coppersmith's short-pad attack
+	- [From Japan with Love](./tree/master/2021/Foobar%20CTF%202021/) - Stego 383 (20)\
+		&#8250; QR decoy, LSB hidden ascii
+
 - **picoCTF 2021**
 	- [Easy Peasy](./tree/master/2021/picoCTF%202021-03/) - Crypto 40 (424)\
 		&#8250; XOR cipher disguised as an OTP, len(key) != len(msg)
@@ -25,14 +41,14 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 		&#8250; Playfair cipher
 	- [Double DES](./tree/master/2021/picoCTF%202021-03/) - Crypto 120 (214)\
 		&#8250; 2DES-ECB, meet in the middle attack
-	- [Compress and Attack](./tree/master/2021/picoCTF%202021-03/) - Crypto 130 (99)\
+	- [Compress and Attack](./tree/master/2021/picoCTF%202021-03/) - Crypto 130 (163)\
 		&#8250; Compression before encryption leak
-	- [Scrambled: RSA](./tree/master/2021/picoCTF%202021-03/) - Crypto 140 (6414)\
+	- [Scrambled: RSA](./tree/master/2021/picoCTF%202021-03/) - Crypto 140 (99)\
 		&#8250; coming soon
 	- [It's Not My Fault 1](./tree/master/2021/picoCTF%202021-03/) - Crypto 300 (82)\
 		&#8250; coming soon
 	- [New Vignere](./tree/master/2021/picoCTF%202021-03/) - Crypto 300 (255)\
-		&#8250; Vigénere cipher-like, reverse and brute-force, small character space
+		&#8250; Vigenère cipher-like, reverse and brute-force, small character space
 	- [Clouds](./tree/master/2021/picoCTF%202021-03/) - Crypto 500 (16)\
 		&#8250; coming soon
 
