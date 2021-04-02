@@ -9,9 +9,9 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 # 2021
 
 - **Foobar CTF 2021**
-	- [Profezzor revenge](./tree/main/2021/Foobar%20CTF%202021-04/Profezzor%20revenge) - Crypto 100 (66)\
+	- [Profezzor revenge](./main/2021/Foobar%20CTF%202021-04/Profezzor%20revenge) - Crypto 100 (66)\
 		&#8250; XOR entire PDF with key derived from hex signature
-	- [Lost-N](./tree/main/2021/Foobar%20CTF%202021-04/Lost-N) - Crypto 100 (47)\
+	- [Lost-N](./2021/Foobar%20CTF%202021-04/Lost-N) - Crypto 100 (47)\
 		&#8250; RSA, unknown modulus recovery from cipher- plaintext pairs
 	- [Hill-Kill](./tree/main/2021/Foobar%20CTF%202021-04/Hill-Kill) - Crypto 436 (15)\
 		&#8250; Hill cipher, pwn automatic decryption
