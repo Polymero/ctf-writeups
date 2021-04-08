@@ -38,24 +38,24 @@ There is a catch however, and that's the +/- sign which is randomised in the sou
 
 Let's try to solve the above system for the key first by eliminating the other variables, except for the i's as their parameter space is sufficiently small to just brute-force.
 
-![](eq1.png)
-![](eq2.png)
+![](eqs/eq1.png)
+![](eqs/eq2.png)
 
 And so we find
 
-![](eq3.png)
+![](eqs/eq3.png)
 
 And equivalently,
 
-![](eq4.png)
+![](eqs/eq4.png)
 
 This leaves us with the following root function of which we can derive the keys using a root-finding algorithm, such as the bisection method. This method is perfect for simple functions, such as this one.
 
-![](eq5.png)
+![](eqs/eq5.png)
 
 Now that we have our possible keys, we can find the IV from the key using
 
-![](eq6.png)
+![](eqs/eq6.png)
 
 To do this for all possible combinations of (i2, i3) I used the Python script below.
 
