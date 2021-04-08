@@ -17,9 +17,9 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 		&#8250; AES-CBC padding oracle attack to forge encryption
 	- [Cold War Gets Hotter](./2021/b01lers%20CTF%202021-04/Cold%20War%20Gets%20Hotter) - Crypto 499 (4)\
 		&#8250; coming soon
-	- [Reasonable Security Ahead](./2021/b01lers%20CTF%202021-04/Reasonable%20Security%20Ahead) - Crypto 500 (2)
+	- [Reasonable Security Ahead](./2021/b01lers%20CTF%202021-04/Reasonable%20Security%20Ahead) - Crypto 500 (2)\
 		&#8250; coming soon
-	- [Double XOR](./2021/b01lers%20CTF%202021-04/Double%20XOR) - Crypto 500 (1)
+	- [Double XOR](./2021/b01lers%20CTF%202021-04/Double%20XOR) - Crypto 500 (1)\
 		&#8250; coming soon
 
 - **ångstromCTF 2021**

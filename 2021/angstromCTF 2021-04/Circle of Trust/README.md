@@ -42,15 +42,19 @@ Let's try to solve the above system for the key first by eliminating the other v
 ![](eq2.png)
 
 And so we find
+
 ![](eq3.png)
 
 And equivalently,
+
 ![](eq4.png)
 
 This leaves us with the following root function of which we can derive the keys using a root-finding algorithm, such as the bisection method. This method is perfect for simple functions, such as this one.
+
 ![](eq5.png)
 
 Now that we have our possible keys, we can find the IV from the key using
+
 ![](eq6.png)
 
 To do this for all possible combinations of (i2, i3) I used the Python script below.
