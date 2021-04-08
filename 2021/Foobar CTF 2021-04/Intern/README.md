@@ -6,7 +6,7 @@ Foobar CTF - Crypto 461 (12)
 
 ![](Intern.png)
 
-Upon netcat connection we re greeted with an RSA modulus and public exponent. Ding ding, e=3 is not secure and might be exploitable, let's keep that in mind. We have two choices
+Upon netcat connection we are greeted with an RSA modulus and public exponent. Ding ding, e=3 is not secure and might be exploitable, let's keep that in mind. We have two choices
 - request a state upon which we receive a random \~69-bit number
 - receive an encrypted flag to which a random number is added
 
@@ -33,7 +33,7 @@ Because we have constructed the LCG we know what rand_num_1 and rand_num_2 are, 
 C1 = encrypt( flag )
 C2 = encrypt( flag + (rand_num_2 - rand_num_1) )
 ```
-we can use the Franklin-Reiter related message attack. I used the following Python script to obtain the ciphertexts and the 'random' added numbers.
+we can use the Franklin-Reiter related message attack. I used the Python script below to obtain the ciphertexts and the added 'random' numbers.
 
 ```py
 #!/usr/bin/env sage -python
@@ -159,7 +159,7 @@ print('c2:', next_num2, c2)
 print()
 ```
 
-Finally I applied the Franklin-Reiter attack in sage using the following.
+Finally I applied the Franklin-Reiter attack in Sage using the following script.
 
 ```py
 ### RUN IN SAGE ENVIRONMENT ###
@@ -192,7 +192,7 @@ def FranklinReiter(n, e, r, c1, c2):
 # Print resulting message
 print(long_to_bytes(franklinReiter(n,e,r,c1,c2)-38991140224961274973))
 ```
-Which finally returns us the full flag
+Which finally returns us the full plain text
 ```
 Do you really think LCG with RSA will make secure system btw flag is GLUG{n44m_l3k3_k44m_4151_50urc3_73r3_bh41_k1}
 ```

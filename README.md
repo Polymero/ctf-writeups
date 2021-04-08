@@ -8,13 +8,39 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 ------
 # 2021
 
+- **b01lers CTF 2021**
+	- [RSASSS](./2021/b01lers%20CTF%202021-04/RSASSS) - Crypto 493 (13)\
+		&#8250; RSA, Shamir's secret sharing
+	- [Baby Double XOR](./2021/b01lers%20CTF%202021-04/Baby%20Double%20XOR) - Crypto 497 (8)\
+		&#8250; Double XOR cipher cryptanalysis, all unknowns
+	- [Unlucky Strike](./2021/b01lers%20CTF%202021-04/Unlucky%20Strike) - Crypto 498 (7)\
+		&#8250; AES-CBC padding oracle attack to forge encryption
+	- [Cold War Gets Hotter](./2021/b01lers%20CTF%202021-04/Cold%20War%20Gets%20Hotter) - Crypto 499 (4)\
+		&#8250; coming soon
+	- [Reasonable Security Ahead](./2021/b01lers%20CTF%202021-04/Reasonable%20Security%20Ahead) - Crypto 500 (2)
+		&#8250; coming soon
+	- [Double XOR](./2021/b01lers%20CTF%202021-04/Double%20XOR) - Crypto 500 (1)
+		&#8250; coming soon
+
+- **ångstromCTF 2021**
+	- [Home Rolled Crypto](./2021/angstromCTF%202021-04/Home%20Rolled%20Crypto) - Crypto 70 (173)\
+		&#8250; Bit-wise encryption, input-output reverse
+	- [Follow the Currents](./2021/angstromCTF%202021-04/Follow%20the%20Currents) - Crypto 70 (270)\
+		&#8250; Simple XOR cipher brute-force
+	- [Circle of Trust](./2021/angstromCTF%202021-04/Circle%20of%20Trust) - Crypto 100 (85)\
+		&#8250; Custom secret sharing scheme, math reverse
+	- [I'm so Random](./2021/angstromCTF%202021-04/I_m%20so%20Random) - Crypto 100 (237)\
+		&#8250; Custom PRNG, weak PRNG
+	- [Oracle of Blair](./2021/angstromCTF%202021-04/Oracle%20of%20Blair) - Crypto 160 (136)\
+		&#8250; AES-CBC decryption oracle exploit (not a padding oracle attack)
+
 - **Foobar CTF 2021**
 	- [Profezzor revenge](./2021/Foobar%20CTF%202021-04/Profezzor%20revenge) - Crypto 100 (66)\
 		&#8250; XOR entire PDF with key derived from hex signature
 	- [Lost-N](./2021/Foobar%20CTF%202021-04/Lost-N) - Crypto 100 (47)\
 		&#8250; RSA, unknown modulus recovery from cipher- plaintext pairs
 	- [Hill-Kill](./2021/Foobar%20CTF%202021-04/Hill-Kill) - Crypto 436 (15)\
-		&#8250; Hill cipher, pwn automatic decryption
+		&#8250; Hill cipher, linear algebra, pwn automatic decryption
 	- [Back to the future](./2021/Foobar%20CTF%202021-04/Back%20to%20the%20future) - Crypto 453 (13)\
 		&#8250; RSA, modular square roots, time seeded random()
 	- [Pascal's Chemistry Lab](./2021/Foobar%20CTF%202021-04/Pascal_s%20Chemistry%20Lab) - Crypto 453 (13)\
@@ -22,7 +48,7 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 	- [Intern](./2021/Foobar%20CTF%202021-04/Intern) - Crypto 461 (12)\
 		&#8250; RSA, LCG prediction, Franklin-Reiter related message attack, (Coppersmith's short-pad attack)
 	- [From Japan with Love](./2021/Foobar%20CTF%202021-04/From%20Japan%20with%20Love) - Stego 383 (20)\
-		&#8250; QR decoy, LSB hidden ascii
+		&#8250; QR, red herring, LSB hidden ascii
 
 - **picoCTF 2021**
 	- [Easy Peasy](./2021/picoCTF%202021-03/) - Crypto 40 (424)\
