@@ -38,14 +38,19 @@ There is a catch however, and that's the +/- sign which is randomised in the sou
 
 Let's try to solve the above system for the key first by eliminating the other variables, except for the i's as their parameter space is sufficiently small to just brute-force.
 
+Let's take the difference between P1 and P2
+
 ![](eqs/eq1.png)
+
+Squared this gives us
+
 ![](eqs/eq2.png)
 
 And so we find
 
 ![](eqs/eq3.png)
 
-And equivalently,
+And equivalently for the difference between P1 and P3,
 
 ![](eqs/eq4.png)
 
