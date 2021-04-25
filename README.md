@@ -55,7 +55,7 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 		&#8250; Hyperelliptic curve cryptography, Jacobian order
 	- [Tetris 3D](./2021/) - Crypto 425 (18)\
 		&#8250; Transposition cipher analysis
-	- [Alienspeak](./2021/) - Crypto 375 (30)\
+	- [Alienspeak](./2021/) - Misc 375 (30)\
 		&#8250; coming soon
 
 - **PlaidCTF 2021**
