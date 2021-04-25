@@ -8,6 +8,120 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 ------
 # 2021
 
+- **S4Lab CTF 2021**
+	- [Baby-Xor](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [Baby-IQ](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [Baby-RSA](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [Merles](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [khayyam](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [genie](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [malady](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [phillip](./2021/) - Crypto ? (?)\
+		&#8250;
+	- [PTS](./2021/) - Misc ? (?)\
+		&#8250;
+	- [Determinant](./2021/) - Misc ? (?)\
+		&#8250;
+	- [Tom](./2021/) - Misc ? (?)\
+		&#8250;
+
+- **Cyber Apocalypse 2021**
+	- [PhaseStream 3](./2021/) - Crypto 300 (531)\
+		&#8250; AES-CTR, re-used key-iv, known plain text
+	- [PhaseStream 4](./2021/) - Crypto 300 (334)\
+		&#8250; AES-CTR, re-used key-iv, deduced plain text
+	- [SoulCrabber 2](./2021/) - Crypto 300 (229)\
+		&#8250; Rust, time seeded PRNG
+	- [Forge of Empires](./2021/) - Crypto 325 (95)\
+		&#8250; Forge ElGamel signatures, no-hashing vulnerability
+	- [Super Metroid](./2021/) - Crypto 325 (77)\
+		&#8250; Weak ECC
+	- [Tetris](./2021/) - Crypto 325 (75)\
+		&#8250; Transposition cipher analysis
+	- [SpongeBob SquarePants: Battle for Bikini Bottom - Rehydrated](./2021/) - Crypto 325 (61)\
+		&#8250; Custom hash function collisions
+	- [Wii Phit](./2021/) - Crypto 350 (38)\
+		&#8250; coming soon
+	- [RuneScape](./2021/) - Crypto 400 (20)\
+		&#8250; Custom multivariate polynomial encryption
+	- [Hyper Metroid](./2021/) - Crypto 425 (18)\
+		&#8250; Hyperelliptic curve cryptography, Jacobian order
+	- [Tetris 3D](./2021/) - Crypto 425 (18)\
+		&#8250; Transposition cipher analysis
+	- [Alienspeak](./2021/) - Crypto 375 (30)\
+		&#8250; coming soon
+
+- **PlaidCTF 2021**
+	- [xorsa](./2021/) - Crypto 100 (180)\
+		&#8250; RSA with XOR hint
+	- [leaky block cipher](./2021/) - Crypto 400 (22)\
+		&#8250; Weak AES-GCM-like cipher manipulation
+	- [Fake Medallion](./2021/) - Crypto 420 (4)\
+		&#8250; Qubit encryption, ...
+	- [Proxima Concursus: The Game](./2021/) - Crypto 200 (5)\
+		&#8250; Rust, coming soon
+	- [Proxima Concursus: Particle Collider](./2021/) - Crypto 200 (5)\
+		&#8250; Rust, coming soon
+
+- **UMDCTF 2021**
+	- [Subway](./2021/) - Crypto 225 (88)\
+		&#8250; Substitution cipher
+	- [Office Secrets](./2021/) - Crypto 250 (87)\
+		&#8250; RSA, same message with different public exponents
+	- [Cards Galore](./2021/) - Crypto 707 (25)\
+		&#8250; Solitaire cipher
+	- [Whose Base Is It Anyway](./2021/) - Crypto 741 (19)\
+		&#8250; Matryoshka doll-like base encoding(s)
+
+- **RITSEC CTF 2021**
+	- [Lorem Ipsum](./2021/) - Crypto 150 (135)\
+		&#8250; Trithemius Ave Maria cipher
+	- [RITSEC Hash](./2021/) - Crypto 250 (56)\
+		&#8250; Custom hash collision
+	- [Streams & Rivers](./2021/) - Crypto 399 (2)\
+		&#8250; (Manual) Mersenne Twister prediction
+	- [Feedback](./2021/) - Crypto 500 (0)\
+		&#8250; LFSR, creative custom encryption
+
+- **Midnightsun CTF 2021**
+	- [ocat_024](./2021/) - Crypto 220 (19)\
+		&#8250; 
+	- [dbcsig_64434](./2021/) - Crypto 228 (18)\
+		&#8250;
+	- [Backup: Alice](./2021/) - Crypto 91 (82)\
+		&#8250; RSA,
+	- [Backup: Bob](./2021/) - Crypto 91 (81)\
+		&#8250; RSA,
+	- [Backup: Craig](./2021/) - Crypto 345 (8)\
+		&#8250; 
+	- [Backup: Dan](./2021/) - Crypto 345 (8)\
+		&#8250; 
+	- [Backup: Eve](./2021/) - Crypto 113 (55)\
+		&#8250; Substitution cipher, guessing
+	- [Backup: Frank](./2021/) - Crypto 121 (49)\
+		&#8250; Partially masked private RSA-SSH key recovery
+
+- **BSides Canberra CTF 2021**
+	- [Make RSA Great Again](./2021/) - Crypto 50* (?)\
+		&#8250; RSA
+	- [Dispicable Key](./2021/) - Crypto 200* (?)\
+		&#8250; AES-ECB
+	- [Bomb Disposal](./2021/) - Crypto 200* (?)\
+		&#8250; PRNG state recovery, LCG with Blum-Blum-Shub
+	- [Empty Fault](./2021/) - Crypto 200* (?)\
+		&#8250; Merkle tree hash collision
+	- [Vanity AES](./2021/) - Crypto 500* (?)\
+		&#8250; AES-??? mode IV+key re-use through simultaneous connection
+	- [Super Cool Facts!](./2021/) - Crypto 500* (?)\
+		&#8250; ECC, invalid point attack
+
 - **b01lers CTF 2021**
 	- [RSASSS](./2021/b01lers%20CTF%202021-04/RSASSS) - Crypto 493 (13)\
 		&#8250; RSA, Shamir's secret sharing
