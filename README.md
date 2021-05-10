@@ -8,6 +8,24 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 ------
 # 2021
 
+- **San Diego CTF 2021**
+	- [A Primed Hash Candidate](./2021/) - Crypto ? (?)\
+		&#8250; Custom hash, math reverse
+	- [Encrypted Communications](./2021/) - Crypto ? (?)\
+		&#8250; AES-CBC, padding vuln, .strip() vuln
+	- [Desmos Pro](./2021/) - Reverse ? (?)\
+		&#8250; Math reverse
+
+- **DEF CON CTF Qualifier 2021**
+	- [nooombers](./2021/) - Crypto 127 (44)\
+		&#8250;
+	- [qoo-or-ooo](./2021/) - Crypto 120 (58)\
+		&#8250;
+	- [back-to-qoo](./2021/) - Crypto 128 (43)\
+		&#8250;
+	- [smart-cryptooo](./2021/) - Crypto 5 (343)\
+		&#8250;
+
 - **S4Lab CTF 2021**
 	- [Baby-Xor](./2021/) - Crypto ? (?)\
 		&#8250;
