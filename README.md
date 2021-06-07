@@ -1,3 +1,12 @@
+---
+layout: page
+title: CTF Write-ups
+sidebar:
+  nav: sidebar-home
+aside:
+  toc: False
+---
+
 # ctf-writeups
 My workings on the challenges of various CTF events, mainly crypto, stego, and coding challenges :)
 
