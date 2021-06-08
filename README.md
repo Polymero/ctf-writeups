@@ -9,11 +9,11 @@ If you like these kind of puzzles, check out my own online cryptographic puzzle 
 # 2021
 
 - **San Diego CTF 2021**
-	- [A Primed Hash Candidate](./2021/) - Crypto ? (?)\
+	- [A Primed Hash Candidate](./2021/) - Crypto 292 (21)\
 		&#8250; Custom hash, math reverse
-	- [Encrypted Communications](./2021/) - Crypto ? (?)\
+	- [Encrypted Communications](./2021/) - Crypto 699 (6)\
 		&#8250; AES-CBC, padding vuln, .strip() vuln
-	- [Desmos Pro](./2021/) - Reverse ? (?)\
+	- [Desmos Pro](./2021/) - Reverse 799 (5)\
 		&#8250; Math reverse
 
 - **DEF CON CTF Qualifier 2021**
